@@ -31,7 +31,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  List<ToDo> allToDo = [];
+
+  @override
+  void initState() {
+    getValues();
+    super.initState();
+  }
+
+  void getValues () async {
+    allToDo = await ToDoDataBase.instance.readAllToDo();
+  }
 
   void _incrementCounter() async {
     final twentyToDo = await ToDoDataBase.instance.readToDo(20);
@@ -54,28 +64,43 @@ class _MyHomePageState extends State<MyHomePage> {
                 for (var element in toDos) {
                   ToDoDataBase.instance.createToDo(element);
                 }
+                setState(() {
+                });
               },
               icon: Icon(Icons.cloud_download))
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: allToDo.length,
+              itemBuilder: (context, index) => ToDoViewWidget(toDo: allToDo[index],)),
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'get',
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+
+class ToDoViewWidget extends StatelessWidget {
+  const ToDoViewWidget({Key? key, required this.toDo}) : super(key: key);
+  final ToDo toDo;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: Text('${toDo.localId}'),
+        title: Text(toDo.title),
+        trailing: toDo.completed ? Icon(Icons.check) : Icon(Icons.do_not_disturb),
       ),
     );
   }
