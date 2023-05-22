@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:service_and_repository_test/screens/add_new_toDo.dart';
 import 'package:service_and_repository_test/screens/cloud_todo_screen.dart';
 import 'package:service_and_repository_test/screens/widgets/toDoViewWidget.dart';
-
+import 'package:service_and_repository_test/services/todo_service.dart';
 import '../models/todo.dart';
-import '../repository/todo_db.dart';
-import '../services/web_service.dart';
 
 
 class MyHomePage extends StatefulWidget {
@@ -25,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void getValues () async {
-    allToDo = await ToDoDataBase.instance.readAllToDo();
+    allToDo = await ToDoStorageService().getAllLocalToDo();
     setState(() {
     });
   }
@@ -58,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          RealWebService().loadToDoInBaseFromWeb();
+                          ToDoStorageService().loadToDoInBaseFromWeb();
                           setState(() {
                           });
                         },

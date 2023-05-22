@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:service_and_repository_test/repository/todo_db.dart';
-import 'package:service_and_repository_test/services/web_service.dart';
+import 'package:service_and_repository_test/services/todo_service.dart';
 
 import '../models/todo.dart';
 
@@ -47,7 +46,7 @@ class _AddNewToDoState extends State<AddNewToDo> {
                     onPressed: (){
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        ToDoDataBase.instance.createToDo(toDo!);}
+                        ToDoStorageService().createLocalToDo(toDo!);}
                       Navigator.pop(context);
                       },
                     child: const Text('Сохранить'),
@@ -56,7 +55,7 @@ class _AddNewToDoState extends State<AddNewToDo> {
                   onPressed: (){
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
-                      RealWebService().addToDoInWeb(toDo!);}
+                      ToDoStorageService().createWebToDo(toDo!);}
                   },
                   child: const Text('Отправить в облако'),
                 ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:service_and_repository_test/screens/widgets/toDoViewWidget.dart';
-import 'package:service_and_repository_test/services/web_service.dart';
+import 'package:service_and_repository_test/services/todo_service.dart';
 
 import '../models/todo.dart';
 
@@ -21,7 +21,7 @@ class _CloudToDoScreenState extends State<CloudToDoScreen> {
   }
 
   Future _getWebToDo() async{
-    toDos = await RealWebService().getToDoFromWeb();
+    toDos = await ToDoStorageService().getAllWebToDo();
     setState(() {
     });
   }

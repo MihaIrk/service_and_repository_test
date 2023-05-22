@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:service_and_repository_test/repository/todo_db.dart';
+import 'package:service_and_repository_test/services/todo_service.dart';
 import '../../models/todo.dart';
 
 class ToDoViewWidget extends StatelessWidget {
@@ -25,7 +25,7 @@ class ToDoViewWidget extends StatelessWidget {
                 ),
           trailing: IconButton(
             onPressed: () {
-              ToDoDataBase.instance.deleteToDO(toDo.localId!);
+              ToDoStorageService().deleteToDoEveryWhere(toDo.localId!, toDo.id);
               refresh();
             },
             icon: const Icon(Icons.delete),

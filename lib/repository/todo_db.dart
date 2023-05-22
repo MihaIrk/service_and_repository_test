@@ -2,17 +2,23 @@ import 'package:service_and_repository_test/models/todo.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-
-abstract class StorageService {  // Создаем абстрактный класс для определения взаимодействия с хранилищем
+/// Абстрактный класс для определения сервиса взаимодействия с локальной частью,
+/// в нем создаем методы с помощью которых мы будем работать с базой данный,
+/// сохранять задачи на устройство, получать из базы данных список всех дел или конкретное дело,
+/// так же изменять содержимое или удалять какое либо дело. Так же тут можно создать методы для взаимодействия локальной и онлайн БД.
+/// Это нужно для того что бы мы могли например создавать две разных локальных БД,
+/// приэтом методы для взаимодействия с ними будет один и тот же.
+abstract class LocalRepository {
   Future createToDo(ToDo toDo);
   Future<ToDo> readToDo(int toDoLocalId);
   Future<List<ToDo>> readAllToDo();
-  Future updateToDO(ToDo toDo);
-  Future deleteToDO(int toDoLocalId);
+  Future updateToDo(ToDo toDo);
+  Future deleteToDo(int toDoLocalId);
 }
 
-
-class ToDoDataBase extends StorageService{ // Расширяемся от абстрактного класса для того что бы определить методы CRUD для взаимодействия с хранилищем
+/// Наследуемся от LocalRepository реализуем хранение данных через sqLite БД, описываем создание БД,
+/// определяем методы для записи, удаления, или обновления задач.
+class ToDoDataBase extends LocalRepository{
   final String _tableName = 'tableToDo';
   static final ToDoDataBase instance = ToDoDataBase._init();
   static Database? _database;
@@ -73,7 +79,7 @@ class ToDoDataBase extends StorageService{ // Расширяемся от абс
   }
 
   @override
-  Future updateToDO (ToDo toDo) async {
+  Future updateToDo (ToDo toDo) async {
     final db = await instance.database;
     await db.update(
       _tableName,
@@ -84,7 +90,7 @@ class ToDoDataBase extends StorageService{ // Расширяемся от абс
   }
 
   @override
-  Future deleteToDO (int toDoLocalId) async {
+  Future deleteToDo (int toDoLocalId) async {
     final db = await instance.database;
     db.delete(
       _tableName,
