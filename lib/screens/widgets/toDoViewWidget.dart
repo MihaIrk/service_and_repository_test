@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:service_and_repository_test/services/todo_db.dart';
+import 'package:service_and_repository_test/repository/todo_db.dart';
 import '../../models/todo.dart';
 
 class ToDoViewWidget extends StatelessWidget {
@@ -14,8 +14,22 @@ class ToDoViewWidget extends StatelessWidget {
         child: ListTile(
           leading: Text('${toDo.localId}'),
           title: Text(toDo.title),
-          subtitle: toDo.completed ? const Text('Выполнено',style: TextStyle(color: Colors.green), ) : const Text('Не выполнено', style: TextStyle(color: Colors.red),),
-          trailing: IconButton(onPressed: (){ToDoDataBase.instance.deleteToDO(toDo.localId!); refresh();}, icon: const Icon(Icons.delete),),
+          subtitle: toDo.completed
+              ? const Text(
+                  'Выполнено',
+                  style: TextStyle(color: Colors.green),
+                )
+              : const Text(
+                  'Не выполнено',
+                  style: TextStyle(color: Colors.red),
+                ),
+          trailing: IconButton(
+            onPressed: () {
+              ToDoDataBase.instance.deleteToDO(toDo.localId!);
+              refresh();
+            },
+            icon: const Icon(Icons.delete),
+          ),
         ),
       ),
     );
@@ -32,7 +46,15 @@ class ToDoWebViewWidget extends StatelessWidget {
       child: ListTile(
         leading: Text('${toDo.id}'),
         title: Text(toDo.title),
-        subtitle: toDo.completed ? const Text('Выполнено',style: TextStyle(color: Colors.green),) : const Text('Не выполнено', style: TextStyle(color: Colors.red),),
+        subtitle: toDo.completed
+            ? const Text(
+                'Выполнено',
+                style: TextStyle(color: Colors.green),
+              )
+            : const Text(
+                'Не выполнено',
+                style: TextStyle(color: Colors.red),
+              ),
       ),
     );
   }

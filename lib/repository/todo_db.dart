@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 
-abstract class StorageService {
+abstract class StorageService {  // Создаем абстрактный класс для определения взаимодействия с хранилищем
   Future createToDo(ToDo toDo);
   Future<ToDo> readToDo(int toDoLocalId);
   Future<List<ToDo>> readAllToDo();
@@ -12,7 +12,7 @@ abstract class StorageService {
 }
 
 
-class ToDoDataBase extends StorageService{
+class ToDoDataBase extends StorageService{ // Расширяемся от абстрактного класса для того что бы определить методы CRUD для взаимодействия с хранилищем
   final String _tableName = 'tableToDo';
   static final ToDoDataBase instance = ToDoDataBase._init();
   static Database? _database;

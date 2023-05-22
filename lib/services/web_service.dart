@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:service_and_repository_test/models/todo.dart';
-import 'package:service_and_repository_test/services/todo_db.dart';
+import 'package:service_and_repository_test/repository/todo_db.dart';
 
-abstract class WebService {
+abstract class WebService {             //Создаю абстрактный класс для определения сервиса взаимодействия с онлайн частью
   Future <List<ToDo>> getToDoFromWeb();
-  Future loadToDoInBaseFromWeb();
+  Future loadToDoInBaseFromWeb();       // Метод который должен выгружать из интернета в локальную БД
   Future addToDoInWeb(ToDo toDo);
 }
 
-class RealWebService extends WebService {
+class RealWebService extends WebService {  //Расширяюсь от абстрактного класса для определения методов работы с онлайном
   final _dio = Dio();
   @override
   Future<List<ToDo>> getToDoFromWeb() async {

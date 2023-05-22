@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:service_and_repository_test/services/todo_db.dart';
+import 'package:service_and_repository_test/repository/todo_db.dart';
 import 'package:service_and_repository_test/services/web_service.dart';
 
 import '../models/todo.dart';
@@ -25,7 +25,7 @@ class _AddNewToDoState extends State<AddNewToDo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Новое дело'),
+        title: const Text('Новое дело'),
       ),
       body: Form(
         key: _formKey,

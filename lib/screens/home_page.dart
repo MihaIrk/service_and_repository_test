@@ -4,7 +4,7 @@ import 'package:service_and_repository_test/screens/cloud_todo_screen.dart';
 import 'package:service_and_repository_test/screens/widgets/toDoViewWidget.dart';
 
 import '../models/todo.dart';
-import '../services/todo_db.dart';
+import '../repository/todo_db.dart';
 import '../services/web_service.dart';
 
 
@@ -34,9 +34,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Список дел'),
+        title: const Text('Список дел'),
         actions: [
-          IconButton(onPressed: (){getValues();}, icon: Icon(Icons.refresh)),
+          IconButton(
+              onPressed: () {
+                getValues();
+              },
+              icon: const Icon(Icons.refresh)),
           IconButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const CloudToDoScreen()));
@@ -80,13 +84,20 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Expanded(
             child: ListView.builder(
-                itemCount: allToDo.length,
-                itemBuilder: (context, index) => ToDoViewWidget(toDo: allToDo[index],refresh: getValues,)),
+              itemCount: allToDo.length,
+              itemBuilder: (context, index) => ToDoViewWidget(toDo: allToDo[index],refresh: getValues,)),
           )
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => AddNewToDo()));},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddNewToDo(),
+            ),
+          );
+        },
         tooltip: 'get',
         child: const Icon(Icons.add),
       ),
