@@ -24,7 +24,7 @@ class RealWebRepository extends WebRepository {
 
   @override
   void createToDoInWeb(ToDo toDo) async {
-    final request = await _dio.post(_path, data: toDo);
+    final request = await _dio.post(_path, data: toDo.toJson());
     print(request.data);
   }
 

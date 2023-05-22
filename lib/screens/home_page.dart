@@ -59,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ToDoStorageService().loadToDoInBaseFromWeb();
                           setState(() {
                           });
+                          Navigator.pop(context);
                         },
                         child: const Text('ДА'),
                       ),
